@@ -1,6 +1,7 @@
-<template lang="pug">  
-  
-    section.section
+<template lang="pug">
+
+    sm-header  
+    section.section      
         nav.navbar
             .field.has-addons
             .control.is-expanded
@@ -12,9 +13,10 @@
                 button.button.is-info(@click="searchTrack") Buscar
             .control
                 button.button.is-danger(@click="cancelar") &times;
-            .control
-                button.button
-                span.is-size-7 {{ cantidad }}
+
+        .comtainer  
+          p
+           small {{ cantidad }}
 
         .container.custom
             .table.container
@@ -30,12 +32,14 @@
                       ul(v-if="c.artists")
                         li(v-for="a in c.artists", :key="a.id") {{ a.name }}
                       p(v-else) {{ '-' }}              
-            
+    sm-footer        
   
 </template>
 
 <script>
 import api from './api'
+import SmFooter from '@/components/layout/SmFooter.vue'
+import SmHeader from '@/components/layout/SmHeader.vue'
 
 export default {
   name: 'app',
@@ -46,6 +50,7 @@ export default {
       showTable: false,
     }
   },
+  components: { SmFooter, SmHeader },
   methods: {
     cancelar() {
       this.searchQuery = ''

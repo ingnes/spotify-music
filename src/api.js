@@ -25,7 +25,7 @@ export async function getCategories(token) {
 
 export async function searchItem(token, q) {
   const type = 'track'
-  const result = await fetch(`${url}/search?q=${q}&type=${type}&limit=10`, {
+  const result = await fetch(`${url}/search?q=${q}&type=${type}&limit=20`, {
     method: 'GET',
     headers: { Authorization: 'Bearer ' + token },
   })

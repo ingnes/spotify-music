@@ -34,8 +34,11 @@
         .container.results
           .columns.is-multiline
             .column.is-one-quarter(v-for="c in canciones")
-                sm-track(:cancion="c")      
-                     
+                sm-track(
+                      :cancion="c",
+                      @click-cancion="setCancionSeleccionada",
+                      :class="cancionSeleccionada && cancionSeleccionada.id ? {'is-active' : c.id == cancionSeleccionada.id } :''"
+                      ) 
     sm-footer        
   
 </template>
@@ -52,6 +55,7 @@ export default {
   data() {
     return {
       canciones: [],
+      cancionSeleccionada: {},
       searchQuery: '',
       showTable: false,
       isLoading: false,
@@ -59,6 +63,9 @@ export default {
   },
   components: { SmFooter, SmHeader, SmTrack, PulseLoader },
   methods: {
+    setCancionSeleccionada(cancion) {
+      this.cancionSeleccionada = cancion
+    },
     cancelar() {
       this.searchQuery = ''
       this.canciones = []
@@ -103,6 +110,10 @@ export default {
 
   .results {
     margin-top: 50px;
+  }
+
+  .is-active {
+    border: 3px hsl(153, 53%, 53%) solid;
   }
 }
 </style>

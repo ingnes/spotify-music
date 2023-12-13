@@ -17,7 +17,7 @@
                nav.level 
                   .level-left
                     a.level-icon
-                      span.icon.is-small ▶    
+                      span.icon.is-small(@click="selectCancion") ▶    
 </template>
 
 <script>
@@ -26,6 +26,12 @@ export default {
 
   props: {
     cancion: { type: Object, default: () => {} },
+  },
+
+  methods: {
+    selectCancion() {
+      this.$emit('click-cancion', this.cancion)
+    },
   },
 }
 </script>

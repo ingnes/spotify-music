@@ -1,37 +1,41 @@
 <template lang="pug">
 
-    sm-header  
+    sm-header
+    pulse-loader(:loading="isLoading")  
     section.section      
-        nav.navbar
-            .field.has-addons
-            .control.is-expanded
+        nav.nav.has-shadow
+            .container            
                 input.input(
                 type="text"
                 placeholder="Buscar canciones"
                 v-model="searchQuery")
-            .control
-                button.button.is-info(@click="searchTrack") Buscar
-            .control
-                button.button.is-danger(@click="cancelar") &times;
+                a.button.is-info.is-large(@click="searchTrack") Buscar            
+                a.button.is-danger.is-large(@click="cancelar") &times;
 
-        .comtainer  
+        .container  
           p
            small {{ cantidad }}
 
-        .container.custom
-            .table.container
-              table.table.is-striped.is-bordered(v-show="encontrados")
-                thead
-                  tr
-                    th.has-text-centered Cancion
-                    th.has-text-centered Artista
-                tbody
-                  tr(v-for="c in canciones",:key="c.id")             
-                    td.has-text-centered {{ c.name }}
-                    td.has-text-centered
-                      ul(v-if="c.artists")
-                        li(v-for="a in c.artists", :key="a.id") {{ a.name }}
-                      p(v-else) {{ '-' }}              
+        //- .container.custom
+        //-     .table.container
+        //-       table.table.is-striped.is-bordered(v-show="encontrados")
+        //-         thead
+        //-           tr
+        //-             th.has-text-centered Cancion
+        //-             th.has-text-centered Artista
+        //-         tbody
+        //-           tr(v-for="c in canciones",:key="c.id")             
+        //-             td.has-text-centered {{ c.name }}
+        //-             td.has-text-centered
+        //-               ul(v-if="c.artists")
+        //-                 li(v-for="a in c.artists", :key="a.id") {{ a.name }}
+        //-               p(v-else) {{ '-' }} 
+
+        .container.results
+          .columns.is-multiline
+            .column.is-one-quarter(v-for="c in canciones")
+                sm-track(:cancion="c")      
+                     
     sm-footer        
   
 </template>
@@ -40,6 +44,8 @@
 import api from './api'
 import SmFooter from '@/components/layout/SmFooter.vue'
 import SmHeader from '@/components/layout/SmHeader.vue'
+import SmTrack from '@/components/SmTrack.vue'
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
 export default {
   name: 'app',
@@ -48,9 +54,10 @@ export default {
       canciones: [],
       searchQuery: '',
       showTable: false,
+      isLoading: false,
     }
   },
-  components: { SmFooter, SmHeader },
+  components: { SmFooter, SmHeader, SmTrack, PulseLoader },
   methods: {
     cancelar() {
       this.searchQuery = ''
@@ -59,6 +66,11 @@ export default {
     },
     searchTrack() {
       //console.log(this.searchQuery)
+      if (!this.searchQuery) {
+        return
+      }
+
+      this.isLoading = true
       const clientId = 'af6ed709c1864aa7b440ae660f9cae09'
       const clientSecret = '3ae071dfc9be4c1db82795dae3e4f26d'
 
@@ -70,6 +82,7 @@ export default {
             (this.canciones = trackItems), (this.encontrados = true)
           )
         )
+        .finally(() => (this.isLoading = false))
         .catch(() => ((this.canciones = []), (this.encontrados = false)))
     },
   },

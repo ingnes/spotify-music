@@ -12,7 +12,14 @@
           .container.has-text-centered
             h1.title Spotify Music 
             h2.subtitle Buscador de Canciones
-
-                    
+            sm-player    
              
 </template>
+
+<script>
+import SmPlayer from '@/components/SmPlayer.vue'
+
+export default {
+  components: { SmPlayer },
+}
+</script>

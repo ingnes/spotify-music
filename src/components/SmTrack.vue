@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import emitter from '@/services/emitter'
+
 export default {
   name: 'SmTrack',
 
@@ -31,6 +33,7 @@ export default {
   methods: {
     selectCancion() {
       this.$emit('click-cancion', this.cancion)
+      emitter.emit('reproducir-cancion', this.cancion)
     },
   },
 }

@@ -1,7 +1,12 @@
 <template lang="pug">
 
     sm-header
-    pulse-loader(:loading="isLoading")  
+    sm-notification(v-show="showNotification")
+      p.has-text-centered(slot="body") No se encontraron resultados
+    .container
+       .columns
+         .column.is-5.is-offset-6
+            pulse-loader(:loading="isLoading")  
     section.section      
         nav.nav.has-shadow
             .container            
@@ -49,6 +54,7 @@ import SmFooter from '@/components/layout/SmFooter.vue'
 import SmHeader from '@/components/layout/SmHeader.vue'
 import SmTrack from '@/components/SmTrack.vue'
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+import SmNotification from '@/components/shared/SmNotification.vue'
 
 export default {
   name: 'app',
@@ -59,9 +65,10 @@ export default {
       searchQuery: '',
       showTable: false,
       isLoading: false,
+      showNotification: false,
     }
   },
-  components: { SmFooter, SmHeader, SmTrack, PulseLoader },
+  components: { SmFooter, SmHeader, SmTrack, PulseLoader, SmNotification },
   methods: {
     setCancionSeleccionada(cancion) {
       this.cancionSeleccionada = cancion
@@ -74,6 +81,7 @@ export default {
     searchTrack() {
       //console.log(this.searchQuery)
       if (!this.searchQuery) {
+        this.showNotification = true
         return
       }
 
@@ -84,11 +92,12 @@ export default {
       api
         .getToken(clientId, clientSecret)
         .then((token) => api.searchItem(token, this.searchQuery))
-        .then(
-          (trackItems) => (
-            (this.canciones = trackItems), (this.encontrados = true)
-          )
-        )
+        .then((trackItems) => {
+          //console.log(trackItems)
+          this.showNotification = trackItems.length === 0
+          this.canciones = trackItems
+          this.encontrados = true
+        })
         .finally(() => (this.isLoading = false))
         .catch(() => ((this.canciones = []), (this.encontrados = false)))
     },
@@ -96,6 +105,15 @@ export default {
   computed: {
     cantidad() {
       return `Encontrados: ${this.canciones.length} `
+    },
+  },
+  watch: {
+    showNotification() {
+      if (this.showNotification) {
+        setTimeout(() => {
+          this.showNotification = false
+        }, 3000)
+      }
     },
   },
 }

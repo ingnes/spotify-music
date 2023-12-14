@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from 'vue-router'
 
-import search from '@/components/SmSearch.vue'
-import error from '@/views/SmError.vue'
+import search from '@/components/views/SmSearch.vue'
+import error from '@/components/views/SmError.vue'
 
 const history = createWebHistory()
 

@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import api from '../api'
+import api from '@/api'
 import SmTrack from '@/components/SmTrack.vue'
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 import SmNotification from '@/components/shared/SmNotification.vue'

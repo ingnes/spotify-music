@@ -16,9 +16,9 @@
                small {{ ms_to_mm(cancion.duration_ms) }}
                nav.level 
                   .level-left
-                    a.level-item
+                    button.level-item.button.is-primary
                       span.icon.is-small(@click="selectCancion") ▶
-                    a.level-item
+                    button.level-item.button.is-warning
                       span.icon.is-small(@click="goToTrack(cancion.id)") 🚀    
 </template>
 

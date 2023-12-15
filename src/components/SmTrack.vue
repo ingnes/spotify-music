@@ -35,10 +35,16 @@ export default {
 
   methods: {
     selectCancion() {
+      if (!this.cancion.preview_url) {
+        return
+      }
       this.$emit('click-cancion', this.cancion)
       emitter.emit('reproducir-cancion', this.cancion)
     },
     goToTrack(id) {
+      if (!this.cancion.preview_url) {
+        return
+      }
       this.$router.push({ name: 'track', params: { id } })
     },
   },

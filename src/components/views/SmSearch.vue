@@ -25,6 +25,7 @@
           .columns.is-multiline
             .column.is-one-quarter(v-for="c in canciones")
                 sm-track(
+                      v-blur="c.preview_url"
                       :cancion="c",
                       @click-cancion="setCancionSeleccionada",
                       :class="cancionSeleccionada && cancionSeleccionada.id ? {'is-active' : c.id == cancionSeleccionada.id } :''"
@@ -94,6 +95,22 @@ export default {
           this.showNotification = false
         }, 3000)
       }
+    },
+  },
+  directives: {
+    blur: {
+      beforeMount(el, binding) {
+        el.style.filter = !binding.value ? 'blur(3px)' : 'none'
+        el.style.cursor = !binding.value ? 'not-allowed' : 'inherit'
+
+        el.querySelectorAll('button').forEach((b) => {
+          if (!binding.value) {
+            b.setAttribute('disabled', true)
+          } else {
+            b.removeAttribute('disabled')
+          }
+        })
+      },
     },
   },
 }

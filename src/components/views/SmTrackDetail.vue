@@ -7,7 +7,7 @@
 
 <script>
 import SmTrack from '@/components/SmTrack.vue'
-import api from '@/api'
+import api from '@/services/api'
 
 export default {
   name: 'SmTrackDetail',

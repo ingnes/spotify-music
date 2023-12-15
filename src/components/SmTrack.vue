@@ -24,7 +24,7 @@
 
 <script>
 import emitter from '@/services/emitter'
-import { ms_to_mm } from '@/filters'
+import { ms_to_mm } from '@/filters/filters'
 
 export default {
   name: 'SmTrack',

@@ -1,6 +1,8 @@
 const url = 'https://api.spotify.com/v1'
+const clientId = 'af6ed709c1864aa7b440ae660f9cae09'
+const clientSecret = '3ae071dfc9be4c1db82795dae3e4f26d'
 
-export async function getToken(clientId, clientSecret) {
+export async function getToken() {
   const result = await fetch('https://accounts.spotify.com/api/token', {
     method: 'POST',
     headers: {
@@ -33,8 +35,18 @@ export async function searchItem(token, q) {
   return data.tracks.items
 }
 
+export async function getTrack(token, id) {
+  const result = await fetch(`${url}/tracks/${id}`, {
+    method: 'GET',
+    headers: { Authorization: 'Bearer ' + token },
+  })
+  const data = await result.json()
+  return data
+}
+
 export default {
   getToken,
   getCategories,
   searchItem,
+  getTrack,
 }

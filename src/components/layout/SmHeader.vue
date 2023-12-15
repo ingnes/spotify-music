@@ -6,7 +6,9 @@
                 .nav-left
                   .nav-item
                      strong 🎶 Spotify Music
-                .nav-right.nav-menu
+                  .nav-right.nav-menu
+                     router-link.nav-item(:to="{name: 'search'}") Buscar
+                     router-link.nav-item(:to="{name: 'about'}") Nosotros
 
         .hero-body
           .container.has-text-centered

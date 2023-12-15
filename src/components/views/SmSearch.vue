@@ -66,11 +66,9 @@ export default {
       }
 
       this.isLoading = true
-      const clientId = 'af6ed709c1864aa7b440ae660f9cae09'
-      const clientSecret = '3ae071dfc9be4c1db82795dae3e4f26d'
 
       api
-        .getToken(clientId, clientSecret)
+        .getToken()
         .then((token) => api.searchItem(token, this.searchQuery))
         .then((trackItems) => {
           //console.log(trackItems)

@@ -16,8 +16,10 @@
                small {{ cancion.duration_ms }}
                nav.level 
                   .level-left
-                    a.level-icon
-                      span.icon.is-small(@click="selectCancion") ▶    
+                    a.level-item
+                      span.icon.is-small(@click="selectCancion") ▶
+                    a.level-item
+                      span.icon.is-small(@click="goToTrack(cancion.id)") 🚀    
 </template>
 
 <script>
@@ -34,6 +36,9 @@ export default {
     selectCancion() {
       this.$emit('click-cancion', this.cancion)
       emitter.emit('reproducir-cancion', this.cancion)
+    },
+    goToTrack(id) {
+      this.$router.push({ name: 'track', params: { id } })
     },
   },
 }

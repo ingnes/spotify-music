@@ -4,7 +4,7 @@
            img(:src="cancion.album.images[0].url")
         p
          strong {{ cancion.name }}
-         small {{ cancion.artists[0].name }}
+         small {{ ms_to_mm(cancion.duration_ms) }}
         p(v-show="cancion.preview_url")
          audio(controls, :src="cancion.preview_url")
         
@@ -13,6 +13,7 @@
 
 <script>
 import emitter from '@/services/emitter'
+import { ms_to_mm } from '@/filters'
 
 export default {
   name: 'SmPlayer',
@@ -29,6 +30,11 @@ export default {
       // this.image = cancion.album.images[0].url
       // console.log(this.image)
     })
+  },
+  setup() {
+    return {
+      ms_to_mm,
+    }
   },
 }
 </script>

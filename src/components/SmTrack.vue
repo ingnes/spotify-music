@@ -13,7 +13,7 @@
                        strong {{ cancion.name }}
                     p.subtitle.is-6 {{ cancion.artists[0].name }}
             .content
-               small {{ cancion.duration_ms }}
+               small {{ ms_to_mm(cancion.duration_ms) }}
                nav.level 
                   .level-left
                     a.level-item
@@ -24,6 +24,7 @@
 
 <script>
 import emitter from '@/services/emitter'
+import { ms_to_mm } from '@/filters'
 
 export default {
   name: 'SmTrack',
@@ -40,6 +41,11 @@ export default {
     goToTrack(id) {
       this.$router.push({ name: 'track', params: { id } })
     },
+  },
+  setup() {
+    return {
+      ms_to_mm,
+    }
   },
 }
 </script>

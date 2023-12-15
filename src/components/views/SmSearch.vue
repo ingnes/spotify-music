@@ -11,7 +11,9 @@
                 input.input(
                 type="text"
                 placeholder="Buscar canciones"
-                v-model="searchQuery")
+                v-model="searchQuery",
+                @keyup.enter="searchTrack"
+                )
                 a.button.is-info.is-large(@click="searchTrack") Buscar            
                 a.button.is-danger.is-large(@click="cancelar") &times;
 

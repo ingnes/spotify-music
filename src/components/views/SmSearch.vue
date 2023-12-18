@@ -1,10 +1,12 @@
-<template lang="pug">    
-    sm-notification(v-show="showNotification")
+<template lang="pug">
+    transition(name="move")    
+     sm-notification(v-show="showNotification")
       p.has-text-centered(slot="body") No se encontraron resultados
     .container
        .columns
          .column.is-5.is-offset-6
-            pulse-loader(:loading="isLoading")  
+            transition(name="move")
+             pulse-loader(:loading="isLoading")  
     section.section      
         nav.nav.has-shadow
             .container            

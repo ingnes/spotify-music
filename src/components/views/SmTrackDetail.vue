@@ -1,24 +1,49 @@
 <template lang="pug">
     .container(v-if="cancion && cancion.album")
        .columns 
-          .column.is-5.is-offset-4
-            sm-track(:cancion = "cancion")
+          .column.is-3.has-text-centered
+            figure.media-left
+                p.image
+                  img(:src="cancion.album.images[0].url")
+                p
+                  button.button.is-primary.is-large(@click="selectCancion")
+
+          .column.is-8
+            .panel
+                .panel-heading
+                   h1.title {{ cancion.name }}
+                .panel-block 
+                   article.media
+                      .media-content
+                          .content
+                             ul(v-for="(v,k) in cancion")
+                               li
+                                strong {{ k }} :&nbsp;
+                                span {{ v }}
+                      nav.level
+                          .level-left
+                            a.level-item
+
+
+
+             
+
 </template>
 
 <script>
-import SmTrack from '@/components/SmTrack.vue'
 import api from '@/services/api'
+import trackMixin from '@/mixins/track'
 
 export default {
   name: 'SmTrackDetail',
+
+  mixins: [trackMixin],
 
   data() {
     return {
       cancion: {},
     }
   },
-
-  components: { SmTrack },
 
   created() {
     const id = this.$route.params.id
